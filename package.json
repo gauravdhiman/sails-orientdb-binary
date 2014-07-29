@@ -1,0 +1,42 @@
+{
+  "name": "sails-orientdb",
+  "version": "0.10.0",
+  "description": "OrientDB adapter for Sails / Waterline based on Oriento",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/sails-orientdb-binary.git"
+  },
+  "keywords": [
+    "orientdb",
+    "oriento",
+    "adapter",
+    "sails",
+    "waterline",
+    "orm",
+    "sailsjs",
+    "sails.js"
+  ],
+  "author": "Gaurav Dhiman <gauravd.chd@gmail.com>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {},
+  "devDependencies": {
+    "oriento": "git://github.com/codemix/oriento.git",
+	"waterline-adapter-tests": "git://github.com/balderdashy/waterline-adapter-tests.git#associations",
+    "mocha": "*",
+    "root-require": "~0.2.0",
+    "captains-log": "~0.10.6"
+  },
+  "sailsAdapter": {
+    "sailsVersion": "~0.10.0",
+    "implements": [
+      "semantic",
+      "queryable",
+      "associations"
+    ]
+  }
+}
