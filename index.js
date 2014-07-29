@@ -201,15 +201,20 @@ module.exports = (function () {
 		
 		if (options.sort) {
 			order_by = " ORDER BY";
+			first_condition = true;
 			for (var key in options.sort) {
 				val = options.sort[key];
-				if (typeof val != 'string') {
-					continue;
-				}
-				if (val.toUpperCase() == 'DESC') {
+				if (val == 1) {
+					val = 'ASC';
+				} else if (val == -1){
 					val = 'DESC';
 				} else {
-					val = 'ASC';
+					continue;
+				}
+				if (!first_condition) {
+					order_by += ", ";
+				} else {
+					first_condition = false;
 				}
 				order_by += " " + key + " " + val;
 			}
@@ -221,7 +226,6 @@ module.exports = (function () {
 		if (options.fetchplan) {
 			sql += " FETCHPLAN " + options.fetchplan;
 		}
-		sql += ";";
 		console.log("Sending query - " + sql);
 		  
 		db.query(sql)
