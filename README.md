@@ -2,12 +2,13 @@
 
 # sails-orientdb adapter
 
-This is a waterline ORM adapter which connects SailsJS app to OrientDB data store. It implements basic CRUD operations on OrientDB using its Binary protocol that is exposed through Oriento.
+This is a waterline ORM adapter which connects SailsJS app to OrientDB data store. It implements basic CRUD operations on OrientDB using both Binary and REST/HTTP protocols.
+NOTE: Although the name of this package specifies 'binary', but it supports both protocols (Binary + REST). NPM name was taken when REST support was not implemented, hence the old name continues.
 
 
 > ### WARNING
 >
-> This version of the adapter is for the v0.10 release of Sails / Waterline.
+> This version of the adapter is for the v0.10+ release of Sails / Waterline. It should work with latest Sails version.
 
 
 
@@ -40,9 +41,9 @@ module.exports.adapters = {
 ```
 
 
-## Based on Oriento
+## Communicate with OrientDB using Binary & REST Protocols
 
-This adapter is based on [Oriento] (https://github.com/codemix/oriento)) which uses the binary protocol to access OrientDB. Using this adapter you can do below oprations on OrientDB classes.
+Using this adapter you can do below CRUD operations on OrientDB classes over binary protocol.
 
 #### Find: Select record(s) from OrientDB collection / class / table
 Example usage: Below example find all those User records where id (in OrientDB its @rid - primary key) is #5:3 and name attribute is 'mike'
@@ -143,6 +144,8 @@ User.destroy(
 #### callDBFunction: OrientDB allows you to write function in javascript or SQL which work very similar to stored procedures. We can call such defined function using callDBFunction method of this adapter.
 Example usage: Below example calls the defined OrientDB functions getAllStates() with parameter 'India'.
 
+##### Calling function over Binary Protocol:
+
 ```javascript
 User.callDBFunction(
 	{
@@ -159,6 +162,30 @@ User.callDBFunction(
 );
 ```
 
+##### Calling OrientDB function over REST / HTTP protocol
+
+```javascript
+var options = {
+	funcName: "addUser",
+	protocol: "http",
+	method: "POST",
+	params: {
+		firstName: 'Mike',
+		lastName: 'Tyson',
+		email: 'mike@tyson.com'
+	}
+};
+
+Users.callDBFunction(options, function(err, results) {
+	var user;
+	if (err) {
+		res.json(err.code, err.message);
+	} else {
+		users = results.result;
+		res.json(users);
+	}
+});
+```
 
 
 ## Waterline
